@@ -1,5 +1,4 @@
 const express = require('express');
-const bodyParser = require('body-parser');
 const Router = require('./router');
 
 class Server {
@@ -11,7 +10,7 @@ class Server {
   }
 
   middleware() {
-    this.server.use(bodyParser.json());
+    this.server.use(express.json({ limit: '10mb' }));
   }
 
   listen() {

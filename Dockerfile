@@ -1,7 +1,4 @@
-FROM alpine:3.9
-
-ENV NODE_VERSION 12.16.3
-RUN apk add yarn
+FROM node:current-alpine3.12
 
 WORKDIR /src
 
