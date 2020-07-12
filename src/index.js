@@ -1,10 +1,24 @@
 require('dotenv').config();
 require('reflect-metadata');
-const { createConnection } = require('typeorm');
+const { createConnection, EntitySchema } = require('typeorm');
 const Server = require('./server/server');
+const ProductEntity = require('./entity/Product');
+const CategoryEntity = require('./entity/Category');
 
 (async () => {
-  await createConnection();
+  await createConnection({
+    type: process.env.TYPEORM_CONNECTION,
+    host: process.env.TYPEORM_HOST,
+    port: process.env.TYPEORM_PORT,
+    username: process.env.TYPEORM_USERNAME,
+    password: process.env.TYPEORM_PASSWORD,
+    database: process.env.TYPEORM_DATABASE,
+    synchronize: process.env.TYPEORM_SYNCHRONIZE,
+    entities: [
+      new EntitySchema(ProductEntity),
+      new EntitySchema(CategoryEntity),
+    ],
+  });
   const app = new Server();
   app.listen();
 })();
