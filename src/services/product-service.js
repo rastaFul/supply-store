@@ -55,8 +55,6 @@ class ProductService {
 
     product.categories = params.categories ? categories : product.categories;
 
-    console.log(product);
-
     return getRepository('Product').save(product);
   }
 

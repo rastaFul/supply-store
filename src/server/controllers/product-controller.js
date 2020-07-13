@@ -20,7 +20,7 @@ class ProductController {
       const response = await product.create(req.body);
       return res.status(201).send(response);
     } catch (error) {
-      console.log(error);
+      console.error(error);
       return res.status(500).send('server error');
     }
   }
@@ -34,7 +34,7 @@ class ProductController {
       const response = await product.update(req.params.id, req.body);
       return res.status(201).send(response);
     } catch (error) {
-      console.log(error);
+      console.error(error);
       return res.status(500).send('server error');
     }
   }
@@ -48,7 +48,7 @@ class ProductController {
       await product.remove(req.params.id);
       return res.status(204).send();
     } catch (error) {
-      console.log(error);
+      console.error(error);
       return res.status(500).send('server error');
     }
   }
