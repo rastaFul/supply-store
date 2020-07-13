@@ -1,4 +1,4 @@
-const { getRepository, Repository } = require('typeorm');
+const { getRepository, Repository, getManager } = require('typeorm');
 
 class StockService {
   find(entity) {
@@ -16,8 +16,12 @@ class StockService {
     repository.quantity = quantity;
     repository.createdAt = new Date();
 
-    const itemInserted = await getRepository(entity).save(repository);
-    await this.afterInsertRemove(entity, productId, quantity);
+    let itemInserted;
+
+    await getManager().transaction(async (manager) => {
+      itemInserted = await manager.getRepository(entity).save(repository);
+      await this.afterInsertRemove(manager, entity, productId, quantity);
+    });
 
     return itemInserted;
   }
@@ -28,16 +32,17 @@ class StockService {
     if (!item) {
       throw new Error('Item não existe');
     }
+    await getManager().transaction(async (manager) => {
+      const itemRemoved = await manager.getRepository(entity).remove(item);
+      await this.afterInsertRemove(manager, entity, itemRemoved.product.id, itemRemoved.quantity);
+    });
 
-
-    const itemRemoved = await getRepository(entity).remove(item);
-    await this.afterInsertRemove(entity, itemRemoved.product.id, itemRemoved.quantity);
   }
 
-  async afterInsertRemove(entity, productId, quantity) {
+  async afterInsertRemove(manager, entity, productId, quantity) {
     const product = await getRepository('Product').findOne(productId);
     const currentQuantity = entity === 'Inflow' ? product.currentQuantity + quantity : product.currentQuantity - quantity;
-    await getRepository('Product').update(productId, { currentQuantity });
+    await manager.getRepository('Product').update(productId, { currentQuantity });
   }
 }
 
