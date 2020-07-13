@@ -27,6 +27,38 @@ class ProductService {
 
     return getRepository('Product').save(product);
   }
+
+  async update(id, params) {
+    const product = await getRepository('Product').findOne({ where: { id }, relations: ['categories'] });
+    const categories = [];
+
+    if (!product) {
+      throw new Error('Produto informado não existe');
+    }
+
+    product.name = params.name || product.name;
+    product.barcode = params.barcode || product.barcode;
+
+    if (params.categories) {
+      // eslint-disable-next-line no-restricted-syntax
+      for (const categoryId of params.categories) {
+        // eslint-disable-next-line no-await-in-loop
+        const category = await getRepository('Category').findOne(categoryId);
+
+        if (!category) {
+          throw new Error('Categoria não existe');
+        }
+
+        categories.push(category);
+      }
+    }
+
+    product.categories = params.categories ? categories : product.categories;
+
+    console.log(product);
+
+    return getRepository('Product').save(product);
+  }
 }
 
 module.exports = ProductService;

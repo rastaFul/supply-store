@@ -24,6 +24,20 @@ class ProductController {
       return res.status(500).send('server error');
     }
   }
+
+  async put(req, res) {
+    try {
+      if (!req.params.id) {
+        return res.status(400).send('missing params [id]');
+      }
+
+      const response = await product.update(req.params.id, req.body);
+      return res.status(201).send(response);
+    } catch (error) {
+      console.log(error);
+      return res.status(500).send('server error');
+    }
+  }
 }
 
 module.exports = new ProductController();
