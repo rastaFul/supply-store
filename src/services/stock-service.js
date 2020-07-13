@@ -7,6 +7,8 @@ class StockService {
 
   async insert(productId, entity, quantity) {
     const product = await getRepository('Product').findOne(productId);
+    let itemInserted;
+
     if (!product) {
       throw new Error('Produto informado não existe');
     }
@@ -16,7 +18,6 @@ class StockService {
     repository.quantity = quantity;
     repository.createdAt = new Date();
 
-    let itemInserted;
 
     await getManager().transaction(async (manager) => {
       itemInserted = await manager.getRepository(entity).save(repository);
