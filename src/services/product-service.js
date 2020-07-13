@@ -22,6 +22,10 @@ class ProductService {
     }
 
     product.name = params.name;
+    product.minQuantity = params.minQuantity;
+    product.maxQuantity = params.maxQuantity;
+    product.currentQuantity = params.currentQuantity || 0;
+
     product.barcode = params.barcode;
     product.categories = categories;
 
@@ -38,6 +42,8 @@ class ProductService {
 
     product.name = params.name || product.name;
     product.barcode = params.barcode || product.barcode;
+    product.minQuantity = params.minQuantity || product.minQuantity;
+    product.maxQuantity = params.maxQuantity || product.maxQuantity;
 
     if (params.categories) {
       // eslint-disable-next-line no-restricted-syntax

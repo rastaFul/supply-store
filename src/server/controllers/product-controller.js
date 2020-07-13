@@ -13,8 +13,13 @@ class ProductController {
 
   async post(req, res) {
     try {
-      if (!req.body.name) {
-        return res.status(400).send('missing params [name]');
+      const requiredParams = ['name', 'minQuantity', 'maxQuantity'];
+
+      // eslint-disable-next-line no-restricted-syntax
+      for (const param of requiredParams) {
+        if (!req.body[param]) {
+          return res.status(400).send(`missing params [${param}]`);
+        }
       }
 
       const response = await product.create(req.body);
