@@ -10,8 +10,12 @@ class Router {
     app.post('/v1/product', productController.post);
     app.put('/v1/product/:id', productController.put);
     app.delete('/v1/product/:id', productController.delete);
-    app.get('/v1/stock/input', stockController.getInputs);
-    app.get('/v1/stock/output', stockController.getOutputs);
+
+    app.get('/v1/stock/input', stockController.getInput);
+    app.post('/v1/stock/input/:productId', stockController.postInput);
+
+    app.get('/v1/stock/output', stockController.getOutput);
+    app.post('/v1/stock/input/:productId', stockController.postOutput);
   }
 }
 
