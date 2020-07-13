@@ -19,6 +19,16 @@ class StockService {
 
     return getRepository('Product').save(repository);
   }
+
+  async delete(id, entity) {
+    const item = getRepository(entity).findOne(id);
+
+    if (!item) {
+      throw new Error('Item não existe');
+    }
+
+    await getRepository(entity).remove(item);
+  }
 }
 
 module.exports = StockService;

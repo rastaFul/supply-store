@@ -11,16 +11,6 @@ class StockController {
     }
   }
 
-  async getOutput(req, res) {
-    try {
-      const response = await stock.find('Outflow');
-      res.status(200).send(response);
-    } catch (error) {
-      console.log(error);
-      res.status(500).send('server error');
-    }
-  }
-
   async postInput(req, res) {
     try {
       if (!req.params.productId) {
@@ -39,6 +29,30 @@ class StockController {
     }
   }
 
+  async removeInput(req, res) {
+    try {
+      if (!req.params.id) {
+        res.status(400).send('missing params [id]');
+      }
+
+      const response = await stock.remove(req.params.id, 'Inflow');
+      res.status(204).send(response);
+    } catch (error) {
+      console.log(error);
+      res.status(500).send('server error');
+    }
+  }
+
+  async getOutput(req, res) {
+    try {
+      const response = await stock.find('Outflow');
+      res.status(201).send(response);
+    } catch (error) {
+      console.log(error);
+      res.status(500).send('server error');
+    }
+  }
+
   async postOutput(req, res) {
     try {
       if (!req.params.productId) {
@@ -50,7 +64,21 @@ class StockController {
       }
 
       const response = await stock.insert(req.params.productId, 'Outflow', req.body.quantity);
-      res.status(200).send(response);
+      res.status(201).send(response);
+    } catch (error) {
+      console.log(error);
+      res.status(500).send('server error');
+    }
+  }
+
+  async removeOutput(req, res) {
+    try {
+      if (!req.params.id) {
+        res.status(400).send('missing params [id]');
+      }
+
+      const response = await stock.remove(req.params.id, 'Outflow');
+      res.status(204).send(response);
     } catch (error) {
       console.log(error);
       res.status(500).send('server error');
