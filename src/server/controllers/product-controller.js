@@ -10,6 +10,20 @@ class ProductController {
       res.status(500).send('server error');
     }
   }
+
+  async post(req, res) {
+    try {
+      if (!req.body.name) {
+        return res.status(400).send('missing params [name]');
+      }
+
+      const response = await product.create(req.body);
+      return res.status(201).send(response);
+    } catch (error) {
+      console.log(error);
+      return res.status(500).send('server error');
+    }
+  }
 }
 
 module.exports = new ProductController();
