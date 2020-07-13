@@ -59,6 +59,16 @@ class ProductService {
 
     return getRepository('Product').save(product);
   }
+
+  async remove(id) {
+    const product = await getRepository('Product').findOne({ where: { id }, relations: ['categories'] });
+
+    if (!product) {
+      throw new Error('Produto informado não existe');
+    }
+
+    await getRepository('Product').remove(product);
+  }
 }
 
 module.exports = ProductService;
