@@ -6,7 +6,7 @@ class ProductController {
       const response = await product.find();
       res.status(200).send(response);
     } catch (error) {
-      console.log(error);
+      console.error(error);
       res.status(500).send('server error');
     }
   }
