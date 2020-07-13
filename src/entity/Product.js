@@ -12,6 +12,15 @@ module.exports = {
     barcode: {
       type: 'varchar',
     },
+    minQuantity: {
+      type: 'int',
+    },
+    maxQuantity: {
+      type: 'int',
+    },
+    currentQuantity: {
+      type: 'int',
+    },
   },
   relations: {
     categories: {

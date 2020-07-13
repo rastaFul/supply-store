@@ -1,5 +1,5 @@
 module.exports = {
-  name: 'Stock',
+  name: 'Inflow',
   columns: {
     id: {
       primary: true,
@@ -9,9 +9,9 @@ module.exports = {
     quantity: {
       type: 'int',
     },
-    updatedAt: {
+    createdAt: {
       type: 'timestamp',
-      name: 'updated_at',
+      name: 'created_at',
     },
   },
   relations: {

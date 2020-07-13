@@ -4,7 +4,8 @@ const { createConnection, EntitySchema } = require('typeorm');
 const Server = require('./server/server');
 const ProductEntity = require('./entity/Product');
 const CategoryEntity = require('./entity/Category');
-const StockEntity = require('./entity/Stock');
+const InflowEntity = require('./entity/Inflow');
+const OutflowEntity = require('./entity/Outflow');
 
 (async () => {
   await createConnection({
@@ -18,7 +19,8 @@ const StockEntity = require('./entity/Stock');
     entities: [
       new EntitySchema(ProductEntity),
       new EntitySchema(CategoryEntity),
-      new EntitySchema(StockEntity),
+      new EntitySchema(InflowEntity),
+      new EntitySchema(OutflowEntity),
     ],
   });
   const app = new Server();
