@@ -4,13 +4,13 @@
   "description": "Template application server nodeJS",
   "main": "src/index.js",
   "scripts": {
-    "test": "test",
+    "test": "jest --detectOpenHandles --forceExit",
     "start": "node src/index.js",
     "start:dev": "nodemon",
     "lint": "./node_modules/.bin/eslint src/*.js"
   },
   "lint-staged": {
-    "src/*.js": [
+    "src/**/*.js": [
       "eslint . --fix"
     ]
   },
@@ -38,13 +38,17 @@
   "homepage": "https://github.com/rastaFul/supply-store#readme",
   "dependencies": {
     "dotenv": "^8.2.0",
-    "express": "^4.17.1"
+    "express": "^4.17.1",
+    "mysql": "^2.18.1",
+    "reflect-metadata": "^0.1.13",
+    "typeorm": "^0.2.25"
   },
   "devDependencies": {
     "eslint": "^6.8.0",
     "eslint-config-airbnb-base": "^14.1.0",
     "eslint-plugin-import": "^2.20.2",
     "husky": "^4.2.5",
+    "jest": "^26.1.0",
     "lint-staged": "^10.2.2",
     "nodemon": "^2.0.3"
   }

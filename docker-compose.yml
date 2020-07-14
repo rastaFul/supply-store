@@ -6,16 +6,19 @@ x-logging: &default-logging
   driver: json-file
 services:
   mysql:
-    image: mysql:latest
+    image: mysql:5.7
     container_name: mysql
     command: mysqld --sql_mode='NO_ENGINE_SUBSTITUTION'
     restart: on-failure
-    env_file:
-      - .env
+    environment:
+      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
+      - MYSQL_DATABASE=${MYSQL_DATABASE}
+      - DEFAULT_TIME_ZONE=${DEFAULT_TIME_ZONE}
+      - TZ=${TZ}
     ports:
       - "3306:3306"
     volumes:
-      - /var/volumes/mysql:/var/lib/mysql
+      - /var/volumes/mysql5.7:/var/lib/mysql
     logging: *default-logging
   backend:
     build:
@@ -23,8 +26,19 @@ services:
       dockerfile: Dockerfile
     container_name: supply-store
     restart: on-failure
-    env_file:
-      - .env
+    environment:
+      - TYPEORM_CONNECTION=${TYPEORM_CONNECTION}
+      - TYPEORM_HOST=${TYPEORM_HOST}
+      - TYPEORM_PORT=${TYPEORM_PORT}
+      - TYPEORM_USERNAME=${TYPEORM_USERNAME}
+      - TYPEORM_PASSWORD=${TYPEORM_PASSWORD}
+      - TYPEORM_DATABASE=${TYPEORM_DATABASE}
+      - TYPEORM_SYNCHRONIZE=${TYPEORM_SYNCHRONIZE}
+      - TYPEORM_LOGGING=${TYPEORM_LOGGING}
+      - TYPEORM_ENTITIES=${TYPEORM_ENTITIES}
+      - TYPEORM_MIGRATIONS=${TYPEORM_MIGRATIONS}
+      - TYPEORM_ENTITIES_DIR=${TYPEORM_ENTITIES_DIR}
+      - TYPEORM_MIGRATIONS_DIR=${TYPEORM_MIGRATIONS_DIR}
     ports:
       - "${PORT}:${PORT}"
     logging: *default-logging
