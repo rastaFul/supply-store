@@ -13,13 +13,13 @@ module.exports.swaggerDocument = {
         tags: [
           'Product',
         ],
-        description: 'Return all products',
+        description: 'Buscar todos os produtos cadastrados',
         produces: [
           'application/json',
         ],
         responses: {
           200: {
-            description: 'Product created',
+            description: 'Lista de produtos',
             schema: {
               type: 'array',
               items: {
@@ -48,7 +48,7 @@ module.exports.swaggerDocument = {
         tags: [
           'Product',
         ],
-        description: 'Create a new product',
+        description: 'Criar um novo produto',
         consumes: [
           'application/json',
         ],
@@ -206,6 +206,64 @@ module.exports.swaggerDocument = {
         },
       },
     },
+    '/stock/input': {
+      get: {
+        tags: [
+          'Estoque',
+        ],
+        description: 'Buscar todos as movimentações de entrada do estoque',
+        produces: [
+          'application/json',
+        ],
+        responses: {
+          200: {
+            description: 'Lista de todas as movimentações de entrada do estoque',
+            schema: {
+              type: 'array',
+              items: {
+                allOf: [
+                  {
+                    $ref: '#definitions/Stock',
+                  },
+                  {
+                    type: 'object',
+                    properties: {
+                      product: {
+                        type: 'object',
+                        schema: {
+                          allOf: [
+                            {
+                              $ref: '#definitions/Product',
+                            },
+                            {
+                              type: 'object',
+                              properties: {
+                                currentQuantity: {
+                                  type: 'integer',
+                                },
+                                id: {
+                                  type: 'integer',
+                                },
+                              },
+                            },
+                          ],
+                        },
+                      },
+                      id: {
+                        type: 'integer',
+                      },
+                      createdAt: {
+                        type: 'string',
+                      },
+                    },
+                  },
+                ],
+              },
+            },
+          },
+        },
+      },
+    },
   },
   definitions: {
     Product: {
@@ -222,6 +280,14 @@ module.exports.swaggerDocument = {
         },
         barcode: {
           type: 'string',
+        },
+      },
+    },
+    Stock: {
+      type: 'object',
+      properties: {
+        quantity: {
+          type: 'integer',
         },
       },
     },
