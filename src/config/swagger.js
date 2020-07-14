@@ -115,8 +115,7 @@ module.exports.swaggerDocument = {
         tags: [
           'Product',
         ],
-        description: '',
-        operationId: 'updatePet',
+        description: 'Update a product',
         consumes: [
           'application/json',
         ],
@@ -149,6 +148,45 @@ module.exports.swaggerDocument = {
         responses: {
           204: {
             description: 'Product updated',
+            schema: {
+              allOf: [
+                {
+                  type: 'object',
+                  properties: {
+                    id: {
+                      type: 'integer',
+                    },
+                  },
+                },
+                {
+                  $ref: '#definitions/Product',
+                },
+              ],
+            },
+          },
+        },
+      },
+      delete: {
+        tags: [
+          'Product',
+        ],
+        description: 'Remove a product',
+        produces: [
+          'application/json',
+        ],
+        parameters: [
+          {
+            in: 'path',
+            name: 'ProductId',
+            description: 'Key a product',
+            required: true,
+            type: 'integer',
+            format: 'int64',
+          },
+        ],
+        responses: {
+          204: {
+            description: 'Product removed',
             schema: {
               allOf: [
                 {
