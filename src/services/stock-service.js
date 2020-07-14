@@ -7,7 +7,6 @@ class StockService {
 
   async insert(productId, entity, quantity) {
     const product = await getRepository('Product').findOne(productId);
-    let itemInserted;
 
     if (!product) {
       throw new Error('Produto informado não existe');
@@ -20,11 +19,9 @@ class StockService {
 
 
     await getManager().transaction(async (manager) => {
-      itemInserted = await manager.getRepository(entity).save(repository);
+      await manager.getRepository(entity).save(repository);
       await this.afterInsertRemove(manager, entity, productId, quantity);
     });
-
-    return itemInserted;
   }
 
   async delete(id, entity) {
@@ -37,7 +34,6 @@ class StockService {
       const itemRemoved = await manager.getRepository(entity).remove(item);
       await this.afterInsertRemove(manager, entity, itemRemoved.product.id, itemRemoved.quantity);
     });
-
   }
 
   async afterInsertRemove(manager, entity, productId, quantity) {

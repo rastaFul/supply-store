@@ -22,8 +22,8 @@ class ProductController {
         }
       }
 
-      const response = await product.create(req.body);
-      return res.status(201).send(response);
+      await product.create(req.body);
+      return res.status(201).send();
     } catch (error) {
       console.error(error);
       return res.status(500).send('server error');
