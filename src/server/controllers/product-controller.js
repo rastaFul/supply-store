@@ -37,7 +37,7 @@ class ProductController {
       }
 
       const response = await product.update(req.params.id, req.body);
-      return res.status(201).send(response);
+      return res.status(204).send(response);
     } catch (error) {
       console.error(error);
       return res.status(500).send('server error');
