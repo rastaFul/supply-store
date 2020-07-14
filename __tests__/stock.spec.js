@@ -10,7 +10,6 @@ const {
 
 const StockService = require('../src/services/stock-service');
 const ProductEntity = require('../src/entity/Product');
-const CategoryEntity = require('../src/entity/Category');
 const InflowEntity = require('../src/entity/Inflow');
 const OutflowEntity = require('../src/entity/Outflow');
 
@@ -28,16 +27,10 @@ describe('TESTE DE TRANSAÇÕES', () => {
       synchronize: process.env.TYPEORM_SYNCHRONIZE,
       entities: [
         new EntitySchema(ProductEntity),
-        new EntitySchema(CategoryEntity),
         new EntitySchema(InflowEntity),
         new EntitySchema(OutflowEntity),
       ],
     });
-
-    const category = new Repository('Category');
-    category.id = 1;
-    category.name = 'Teste';
-    await getRepository('Category').save(category);
 
     const product = new Repository('Product');
     product.id = 1;
@@ -46,8 +39,6 @@ describe('TESTE DE TRANSAÇÕES', () => {
     product.minQuantity = 1;
     product.maxQuantity = 10;
     product.currentQuantity = 0;
-    product.categories = [];
-    product.categories.push(category);
 
     await getRepository('Product').save(product);
   });
