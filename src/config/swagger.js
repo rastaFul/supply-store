@@ -10,18 +10,63 @@ module.exports.swaggerDocument = {
   paths: {
     '/product': {
       get: {
+        tags: [
+          'product',
+        ],
         description: 'Return all products',
         produces: [
           'application/json',
         ],
         responses: {
           200: {
-            description: 'A list of products',
+            description: 'Product created',
             schema: {
               type: 'array',
               items: {
-                $ref: '#definitions/product',
+                $ref: '#definitions/Product',
               },
+            },
+          },
+        },
+      },
+      post: {
+        tags: [
+          'product',
+        ],
+        description: 'Create a new product',
+        consumes: [
+          'application/json',
+        ],
+        produces: [
+          'application/json',
+        ],
+        parameters: [
+          {
+            in: 'body',
+            name: 'body',
+            description: 'Pet object that needs to be added to the store',
+            required: true,
+            schema: {
+              allOf: [
+                {
+                  $ref: '#/definitions/Product',
+                },
+                {
+                  required: [
+                    'name',
+                    'minQuantity',
+                    'maxQuantity',
+                  ],
+                },
+              ],
+            },
+          },
+        ],
+        responses: {
+          201: {
+            description: 'Product created',
+            schema: {
+              $ref: '#definitions/Product',
             },
           },
         },
@@ -29,13 +74,8 @@ module.exports.swaggerDocument = {
     },
   },
   definitions: {
-    product: {
+    Product: {
       type: 'object',
-      required: [
-        'name',
-        'minQuantity',
-        'maxQuantity',
-      ],
       properties: {
         name: {
           type: 'string',
