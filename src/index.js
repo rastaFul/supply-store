@@ -3,7 +3,6 @@ require('reflect-metadata');
 const { createConnection, EntitySchema } = require('typeorm');
 const Server = require('./server/server');
 const ProductEntity = require('./entity/Product');
-const CategoryEntity = require('./entity/Category');
 const InflowEntity = require('./entity/Inflow');
 const OutflowEntity = require('./entity/Outflow');
 
@@ -18,7 +17,6 @@ const OutflowEntity = require('./entity/Outflow');
     synchronize: process.env.TYPEORM_SYNCHRONIZE,
     entities: [
       new EntitySchema(ProductEntity),
-      new EntitySchema(CategoryEntity),
       new EntitySchema(InflowEntity),
       new EntitySchema(OutflowEntity),
     ],

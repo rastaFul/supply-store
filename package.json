@@ -10,7 +10,7 @@
     "lint": "./node_modules/.bin/eslint src/*.js"
   },
   "lint-staged": {
-    "src/**/*.js": [
+    "src/*.js": [
       "eslint . --fix"
     ]
   },

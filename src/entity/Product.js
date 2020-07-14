@@ -22,22 +22,4 @@ module.exports = {
       type: 'int',
     },
   },
-  relations: {
-    categories: {
-      target: 'Category',
-      type: 'many-to-many',
-      joinTable: {
-        name: 'product_category',
-        joinColumn: {
-          name: 'product_id',
-          referencedColumnName: 'id',
-        },
-        inverseJoinColumn: {
-          name: 'category_id',
-          referencedColumnName: 'id',
-        },
-      },
-      cascade: true,
-    },
-  },
 };
