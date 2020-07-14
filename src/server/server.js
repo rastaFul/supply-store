@@ -1,4 +1,6 @@
 const express = require('express');
+const swaggerUi = require('swagger-ui-express');
+const { swaggerDocument } = require('../config/swagger');
 const Router = require('./router');
 
 class Server {
@@ -10,6 +12,7 @@ class Server {
   }
 
   middleware() {
+    this.server.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
     this.server.use(express.json({ limit: '10mb' }));
   }
 
