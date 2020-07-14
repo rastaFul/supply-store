@@ -11,7 +11,7 @@ module.exports.swaggerDocument = {
     '/product': {
       get: {
         tags: [
-          'product',
+          'Product',
         ],
         description: 'Return all products',
         produces: [
@@ -23,7 +23,22 @@ module.exports.swaggerDocument = {
             schema: {
               type: 'array',
               items: {
-                $ref: '#definitions/Product',
+                allOf: [
+                  {
+                    $ref: '#definitions/Product',
+                  },
+                  {
+                    type: 'object',
+                    properties: {
+                      currentQuantity: {
+                        type: 'integer',
+                      },
+                      id: {
+                        type: 'integer',
+                      },
+                    },
+                  },
+                ],
               },
             },
           },
@@ -31,7 +46,7 @@ module.exports.swaggerDocument = {
       },
       post: {
         tags: [
-          'product',
+          'Product',
         ],
         description: 'Create a new product',
         consumes: [
@@ -52,6 +67,14 @@ module.exports.swaggerDocument = {
                   $ref: '#/definitions/Product',
                 },
                 {
+                  type: 'object',
+                  properties: {
+                    currentQuantity: {
+                      type: 'integer',
+                    },
+                  },
+                },
+                {
                   required: [
                     'name',
                     'minQuantity',
@@ -66,7 +89,80 @@ module.exports.swaggerDocument = {
           201: {
             description: 'Product created',
             schema: {
-              $ref: '#definitions/Product',
+              allOf: [
+                {
+                  $ref: '#definitions/Product',
+                },
+                {
+                  type: 'object',
+                  properties: {
+                    currentQuantity: {
+                      type: 'integer',
+                    },
+                    id: {
+                      type: 'integer',
+                    },
+                  },
+                },
+              ],
+            },
+          },
+        },
+      },
+    },
+    '/product/{id}': {
+      put: {
+        tags: [
+          'Product',
+        ],
+        description: '',
+        operationId: 'updatePet',
+        consumes: [
+          'application/json',
+        ],
+        produces: [
+          'application/json',
+        ],
+        parameters: [
+          {
+            in: 'path',
+            name: 'ProductId',
+            description: 'Key a product',
+            required: true,
+            type: 'integer',
+            format: 'int64',
+          },
+          {
+            in: 'body',
+            name: 'body',
+            description: 'Properties of product',
+            required: true,
+            schema: {
+              allOf: [
+                {
+                  $ref: '#/definitions/Product',
+                },
+              ],
+            },
+          },
+        ],
+        responses: {
+          204: {
+            description: 'Product updated',
+            schema: {
+              allOf: [
+                {
+                  type: 'object',
+                  properties: {
+                    id: {
+                      type: 'integer',
+                    },
+                  },
+                },
+                {
+                  $ref: '#definitions/Product',
+                },
+              ],
             },
           },
         },
@@ -84,9 +180,6 @@ module.exports.swaggerDocument = {
           type: 'integer',
         },
         maxQuantity: {
-          type: 'integer',
-        },
-        currentQuantity: {
           type: 'integer',
         },
         barcode: {
