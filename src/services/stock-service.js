@@ -12,6 +12,10 @@ class StockService {
       throw new Error('Produto informado não existe');
     }
 
+    if (entity === 'Outflow' && product.currentQuantity - quantity < 0) {
+      throw new Error('Não há produto suficiente em estoque');
+    }
+
     const repository = new Repository(entity);
     repository.product = product;
     repository.quantity = quantity;
@@ -20,7 +24,7 @@ class StockService {
 
     await getManager().transaction(async (manager) => {
       movement = await manager.getRepository(entity).save(repository);
-      movement.product = await this.afterInsertRemove(manager, entity, productId, quantity);
+      movement.product = await this.afterInsert(manager, entity, productId, quantity);
     });
     return movement;
   }
