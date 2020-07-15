@@ -45,6 +45,13 @@ class StockService {
     const currentQuantity = entity === 'Inflow' ? product.currentQuantity + quantity : product.currentQuantity - quantity;
     return manager.getRepository('Product').update(productId, { currentQuantity });
   }
+
+  checkProductStock(product, moviment) {
+    const message = moviment === 'input' ? 'Produto com quantidade abaixo do esperado' : 'Produto com quantidade acima do esperado';
+    return {
+      alert: product.currentQuantity < product.minQuantity || product.currentQuantity > product.maxQuantity ? message : '',
+    };
+  }
 }
 
 module.exports = StockService;

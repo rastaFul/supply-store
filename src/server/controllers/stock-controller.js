@@ -21,8 +21,9 @@ class StockController {
         res.status(400).send('missing params [quantity]');
       }
 
-      await stock.insert(req.params.productId, 'Inflow', req.body.quantity);
-      res.status(201).send();
+      const moviment = await stock.insert(req.params.productId, 'Inflow', req.body.quantity);
+      const response = stock.checkProductStock(moviment.product, 'input');
+      res.status(201).send(response);
     } catch (error) {
       console.error(error);
       res.status(500).send('server error');
@@ -63,8 +64,9 @@ class StockController {
         res.status(400).send('missing params [quantity]');
       }
 
-      await stock.insert(req.params.productId, 'Outflow', req.body.quantity);
-      res.status(201).send();
+      const moviment = await stock.insert(req.params.productId, 'Outflow', req.body.quantity);
+      const response = stock.checkProductStock(moviment.product, 'output');
+      res.status(201).send(response);
     } catch (error) {
       console.error(error);
       res.status(500).send('server error');
