@@ -68,19 +68,23 @@ describe('TESTE DE TRANSAÇÕES', () => {
   });
 
   it('Inserir saída no estoque', async () => {
+    const product = await getRepository('Product').findOne(1);
+    product.currentQuantity = 100;
+    await getRepository('Product').save(product);
+
     const stock = new StockService();
     await stock.insert(1, 'Outflow', 10);
 
     const input = await getRepository('Outflow').findOne({ relations: ['product'] });
-    let product = await getRepository('Product').findOne(1);
+    let productUpdated = await getRepository('Product').findOne(1);
 
     expect(input.quantity).toBe(10);
     expect(input.product.id).toBe(1);
 
-    expect(product.currentQuantity).toBe(-10);
+    expect(productUpdated.currentQuantity).toBe(90);
     await stock.insert(1, 'Outflow', 15);
-    product = await getRepository('Product').findOne(1);
-    expect(product.currentQuantity).toBe(-25);
+    productUpdated = await getRepository('Product').findOne(1);
+    expect(productUpdated.currentQuantity).toBe(75);
   });
 
   it('Saldo após entrada e saída no estoque', async () => {
