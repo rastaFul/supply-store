@@ -3,7 +3,7 @@ module.exports.swaggerDocument = {
   info: {
     description: '',
     version: '1.0.0',
-    title: 'supply-stock',
+    title: 'Controle de estoque de materiais de construção',
   },
   basePath: '/v1',
   schemes: ['http'],
@@ -11,7 +11,7 @@ module.exports.swaggerDocument = {
     '/product': {
       get: {
         tags: [
-          'Product',
+          'Produto',
         ],
         description: 'Buscar todos os produtos cadastrados',
         produces: [
@@ -46,7 +46,7 @@ module.exports.swaggerDocument = {
       },
       post: {
         tags: [
-          'Product',
+          'Produto',
         ],
         description: 'Criar um novo produto',
         consumes: [
@@ -59,7 +59,7 @@ module.exports.swaggerDocument = {
           {
             in: 'body',
             name: 'body',
-            description: 'Pet object that needs to be added to the store',
+            description: 'Propriedades do produto',
             required: true,
             schema: {
               allOf: [
@@ -87,7 +87,7 @@ module.exports.swaggerDocument = {
         ],
         responses: {
           201: {
-            description: 'Product created',
+            description: 'Produto criado',
             schema: {
               allOf: [
                 {
@@ -113,9 +113,9 @@ module.exports.swaggerDocument = {
     '/product/{id}': {
       put: {
         tags: [
-          'Product',
+          'Produto',
         ],
-        description: 'Update a product',
+        description: 'Atualizar um produto',
         consumes: [
           'application/json',
         ],
@@ -126,7 +126,7 @@ module.exports.swaggerDocument = {
           {
             in: 'path',
             name: 'ProductId',
-            description: 'Key a product',
+            description: 'Chave do produto',
             required: true,
             type: 'integer',
             format: 'int64',
@@ -134,7 +134,7 @@ module.exports.swaggerDocument = {
           {
             in: 'body',
             name: 'body',
-            description: 'Properties of product',
+            description: 'Propriedades do produto',
             required: true,
             schema: {
               allOf: [
@@ -147,7 +147,7 @@ module.exports.swaggerDocument = {
         ],
         responses: {
           204: {
-            description: 'Product updated',
+            description: 'Produto atualizado',
             schema: {
               allOf: [
                 {
@@ -168,9 +168,9 @@ module.exports.swaggerDocument = {
       },
       delete: {
         tags: [
-          'Product',
+          'Produto',
         ],
-        description: 'Remove a product',
+        description: 'Remover um produto',
         produces: [
           'application/json',
         ],
@@ -178,7 +178,7 @@ module.exports.swaggerDocument = {
           {
             in: 'path',
             name: 'ProductId',
-            description: 'Key a product',
+            description: 'Chave do produto',
             required: true,
             type: 'integer',
             format: 'int64',
@@ -186,7 +186,7 @@ module.exports.swaggerDocument = {
         ],
         responses: {
           204: {
-            description: 'Product removed',
+            description: 'Produto removido',
             schema: {
               allOf: [
                 {
