@@ -4,7 +4,7 @@ API responsável controlar um estoque de materiais de construção, permitindo o
 
 ## Execução
 
-Há duas alternativas para execução do do projeto:
+Há três alternativas para execução do do projeto:
 
 ### Utilizando docker-compose
 
@@ -15,6 +15,19 @@ Utizando o docker-compose é possível fazer o deploy de todo o ambiente atravé
     bash deploy.compose.bash
 
 `Observação: É necessário parar o serviço mysql executado na máquina, para evitar conflito com o serviço iniciado pelo container da aplicação.`
+
+### Utilizando docker
+Utilizando o docker é possível fazer o deploy da aplicação em qualquer ambiente, porém há a necessidade do serviço de mysql instalado previamente. Basta seguir os seguintes passos:
+- Copiar o arquivo .env.sample para .env e substituir as variáveis de conexão com o banco de dados de acordo com as configurações do servidor mysql que será utilizado.
+- Criar a imagem através do comando:
+
+    > docker build -t `nome` .
+- Executar o container através do comando:
+
+    > docker run -it --name `nome` -d -p 3000:3000 `nome`
+
+
+``` Observação: O ORM implementado na API irá gerar as tabelas/estruturas automaticamente na execução da API, porém é necessário que o banco de dados "vazio" já esteja criado previamente.```
 
 
 ### Executando Local
