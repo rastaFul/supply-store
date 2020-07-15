@@ -1,4 +1,5 @@
 const { stock } = require('../../config/service');
+const { MissingParams } = require('../../error/missing-params');
 const { httpCustom } = require('../error/http');
 
 class StockController {
@@ -14,12 +15,13 @@ class StockController {
 
   async postInput(req, res) {
     try {
-      if (!req.params.productId) {
-        res.status(400).send('missing params [productId]');
-      }
+      const requiredParams = ['productId', 'quantity'];
 
-      if (!req.body.quantity) {
-        res.status(400).send('missing params [quantity]');
+      // eslint-disable-next-line no-restricted-syntax
+      for (const param of requiredParams) {
+        if (!req.body[param]) {
+          throw new MissingParams(param);
+        }
       }
 
       const moviment = await stock.insert(req.params.productId, 'Inflow', req.body.quantity);
@@ -34,7 +36,7 @@ class StockController {
   async deleteInput(req, res) {
     try {
       if (!req.params.id) {
-        res.status(400).send('missing params [id]');
+        throw new MissingParams('id');
       }
 
       await stock.delete(req.params.id, 'Inflow');
@@ -57,12 +59,13 @@ class StockController {
 
   async postOutput(req, res) {
     try {
-      if (!req.params.productId) {
-        res.status(400).send('missing params [productId]');
-      }
+      const requiredParams = ['productId', 'quantity'];
 
-      if (!req.body.quantity) {
-        res.status(400).send('missing params [quantity]');
+      // eslint-disable-next-line no-restricted-syntax
+      for (const param of requiredParams) {
+        if (!req.body[param]) {
+          throw new MissingParams(param);
+        }
       }
 
       const moviment = await stock.insert(req.params.productId, 'Outflow', req.body.quantity);
@@ -77,7 +80,7 @@ class StockController {
   async deleteOutput(req, res) {
     try {
       if (!req.params.id) {
-        res.status(400).send('missing params [id]');
+        throw new MissingParams('id');
       }
 
       await stock.delete(req.params.id, 'Outflow');
