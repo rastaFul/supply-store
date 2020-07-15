@@ -42,3 +42,26 @@ Para executar o projeto localmente, é necessário realizar os seguintes passos:
 Acessar a interface gráfica com todas as informações das rotas implementadas seus respectivos usos através do endpoint:
     
     /api-docs
+
+## Testes
+Para executar os testes unitários é necessário implementar os seguintes passos:
+- Copiar o arquivo .env.sample para .env.test e substituir as variáveis de conexão com o banco de dados de acordo com as configurações do servidor mysql que será utilizado.
+
+`!Observação importante: Não utilizar o mesmo banco de dados utilizado para execução da aplicação`
+
+
+- Instalar as dependências do projeto:
+    
+    ` Através do yarn`
+    > yarn
+
+    ` Através do npm`
+    > npm install
+
+- Executar os testes:
+    
+    ` Através do yarn`
+    > yarn test
+
+    ` Através do npm`
+    > npm run test
