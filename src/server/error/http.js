@@ -1,3 +1,4 @@
+const { QueryFailedError } = require('typeorm');
 const { InvalidParams } = require('../../error/invalid-params');
 const { MissingParams } = require('../../error/missing-params');
 const { NotAllowed } = require('../../error/not-allowed');
@@ -11,6 +12,15 @@ class HttpCustom {
         code: 400,
         message: error.message,
       };
+    }
+
+    if (error instanceof QueryFailedError) {
+      if (error.code === 'ER_ROW_IS_REFERENCED_2') {
+        return {
+          code: 400,
+          message: 'Remoção não permitida, pois há transações com este registro',
+        };
+      }
     }
 
     return {

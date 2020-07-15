@@ -7,20 +7,26 @@ const InflowEntity = require('./entity/Inflow');
 const OutflowEntity = require('./entity/Outflow');
 
 (async () => {
-  await createConnection({
-    type: process.env.TYPEORM_CONNECTION,
-    host: process.env.TYPEORM_HOST,
-    port: process.env.TYPEORM_PORT,
-    username: process.env.TYPEORM_USERNAME,
-    password: process.env.TYPEORM_PASSWORD,
-    database: process.env.TYPEORM_DATABASE,
-    synchronize: process.env.TYPEORM_SYNCHRONIZE,
-    entities: [
-      new EntitySchema(ProductEntity),
-      new EntitySchema(InflowEntity),
-      new EntitySchema(OutflowEntity),
-    ],
-  });
-  const app = new Server();
-  app.listen();
+  try {
+    await createConnection({
+      type: process.env.TYPEORM_CONNECTION,
+      host: process.env.TYPEORM_HOST,
+      port: process.env.TYPEORM_PORT,
+      username: process.env.TYPEORM_USERNAME,
+      password: process.env.TYPEORM_PASSWORD,
+      database: process.env.TYPEORM_DATABASE,
+      synchronize: process.env.TYPEORM_SYNCHRONIZE,
+      entities: [
+        new EntitySchema(ProductEntity),
+        new EntitySchema(InflowEntity),
+        new EntitySchema(OutflowEntity),
+      ],
+    });
+    const app = new Server();
+    app.listen();
+  } catch (error) {
+    console.log(error);
+    process.exit(1);
+  }
+
 })();

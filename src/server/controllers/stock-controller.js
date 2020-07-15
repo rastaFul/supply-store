@@ -24,7 +24,7 @@ class StockController {
         }
       }
 
-      const moviment = await stock.insert(req.params.productId, 'Inflow', req.body.quantity);
+      const moviment = await stock.insert(req.body.productId, 'Inflow', req.body.quantity);
       const response = stock.checkProductStock(moviment.product, 'input');
       return res.status(201).send(response);
     } catch (error) {
@@ -68,7 +68,7 @@ class StockController {
         }
       }
 
-      const moviment = await stock.insert(req.params.productId, 'Outflow', req.body.quantity);
+      const moviment = await stock.insert(req.body.productId, 'Outflow', req.body.quantity);
       const response = stock.checkProductStock(moviment.product, 'output');
       return res.status(201).send(response);
     } catch (error) {
