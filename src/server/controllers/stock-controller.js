@@ -1,13 +1,14 @@
 const { stock } = require('../../config/service');
+const { httpCustom } = require('../error/http');
 
 class StockController {
   async getInput(req, res) {
     try {
       const response = await stock.find('Inflow');
-      res.status(200).send(response);
+      return res.status(200).send(response);
     } catch (error) {
-      console.error(error);
-      res.status(500).send('server error');
+      const response = httpCustom.handleErrors(error);
+      return res.status(response.code).send(response.message);
     }
   }
 
@@ -23,10 +24,10 @@ class StockController {
 
       const moviment = await stock.insert(req.params.productId, 'Inflow', req.body.quantity);
       const response = stock.checkProductStock(moviment.product, 'input');
-      res.status(201).send(response);
+      return res.status(201).send(response);
     } catch (error) {
-      console.error(error);
-      res.status(500).send('server error');
+      const response = httpCustom.handleErrors(error);
+      return res.status(response.code).send(response.message);
     }
   }
 
@@ -37,20 +38,20 @@ class StockController {
       }
 
       await stock.delete(req.params.id, 'Inflow');
-      res.status(204).send();
+      return res.status(204).send();
     } catch (error) {
-      console.error(error);
-      res.status(500).send('server error');
+      const response = httpCustom.handleErrors(error);
+      return res.status(response.code).send(response.message);
     }
   }
 
   async getOutput(req, res) {
     try {
       const response = await stock.find('Outflow');
-      res.status(200).send(response);
+      return res.status(200).send(response);
     } catch (error) {
-      console.error(error);
-      res.status(500).send('server error');
+      const response = httpCustom.handleErrors(error);
+      return res.status(response.code).send(response.message);
     }
   }
 
@@ -66,10 +67,10 @@ class StockController {
 
       const moviment = await stock.insert(req.params.productId, 'Outflow', req.body.quantity);
       const response = stock.checkProductStock(moviment.product, 'output');
-      res.status(201).send(response);
+      return res.status(201).send(response);
     } catch (error) {
-      console.error(error);
-      res.status(500).send('server error');
+      const response = httpCustom.handleErrors(error);
+      return res.status(response.code).send(response.message);
     }
   }
 
@@ -80,10 +81,10 @@ class StockController {
       }
 
       await stock.delete(req.params.id, 'Outflow');
-      res.status(204).send();
+      return res.status(204).send();
     } catch (error) {
-      console.error(error);
-      res.status(500).send('server error');
+      const response = httpCustom.handleErrors(error);
+      return res.status(response.code).send(response.message);
     }
   }
 }
