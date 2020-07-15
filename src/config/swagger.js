@@ -125,7 +125,7 @@ module.exports.swaggerDocument = {
         parameters: [
           {
             in: 'path',
-            name: 'ProductId',
+            name: 'id',
             description: 'Chave do produto',
             required: true,
             type: 'integer',
@@ -177,7 +177,7 @@ module.exports.swaggerDocument = {
         parameters: [
           {
             in: 'path',
-            name: 'ProductId',
+            name: 'id',
             description: 'Chave do produto',
             required: true,
             type: 'integer',
