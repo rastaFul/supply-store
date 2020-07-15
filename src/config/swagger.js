@@ -263,6 +263,60 @@ module.exports.swaggerDocument = {
           },
         },
       },
+      post: {
+        tags: [
+          'Estoque',
+        ],
+        description: 'Criar uma nova entrada no estoque',
+        consumes: [
+          'application/json',
+        ],
+        produces: [
+          'application/json',
+        ],
+        parameters: [
+          {
+            in: 'body',
+            name: 'body',
+            description: 'Propriedades do objeto de entrada de estoque ',
+            required: true,
+            schema: {
+              allOf: [
+                {
+                  $ref: '#definitions/Stock',
+                },
+                {
+                  type: 'object',
+                  properties: {
+                    productId: {
+                      type: 'integer',
+                    },
+                  },
+                },
+                {
+                  required: [
+                    'productId',
+                    'quantity',
+                  ],
+                },
+              ],
+            },
+          },
+        ],
+        responses: {
+          201: {
+            description: '',
+            schema: {
+              type: 'object',
+              properties: {
+                alert: {
+                  type: 'string',
+                },
+              },
+            },
+          },
+        },
+      },
     },
   },
   definitions: {
