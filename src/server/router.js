@@ -12,11 +12,11 @@ class Router {
     app.delete('/v1/product/:id', productController.delete);
 
     app.get('/v1/stock/input', stockController.getInput);
-    app.post('/v1/stock/input/:productId', stockController.postInput);
+    app.post('/v1/stock/input', stockController.postInput);
     app.delete('/v1/stock/input/:id', stockController.deleteInput);
 
     app.get('/v1/stock/output', stockController.getOutput);
-    app.post('/v1/stock/input/:productId', stockController.postOutput);
+    app.post('/v1/stock/output', stockController.postOutput);
     app.delete('/v1/stock/output/:id', stockController.deleteOutput);
   }
 }
