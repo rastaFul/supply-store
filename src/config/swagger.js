@@ -344,6 +344,144 @@ module.exports.swaggerDocument = {
         },
       },
     },
+    '/stock/output': {
+      get: {
+        tags: [
+          'Estoque',
+        ],
+        description: 'Buscar todos as movimentações de entrada do estoque',
+        produces: [
+          'application/json',
+        ],
+        responses: {
+          200: {
+            description: 'Lista de todas as movimentações de entrada do estoque',
+            schema: {
+              type: 'array',
+              items: {
+                allOf: [
+                  {
+                    $ref: '#definitions/Stock',
+                  },
+                  {
+                    type: 'object',
+                    properties: {
+                      product: {
+                        type: 'object',
+                        schema: {
+                          allOf: [
+                            {
+                              $ref: '#definitions/Product',
+                            },
+                            {
+                              type: 'object',
+                              properties: {
+                                currentQuantity: {
+                                  type: 'integer',
+                                },
+                                id: {
+                                  type: 'integer',
+                                },
+                              },
+                            },
+                          ],
+                        },
+                      },
+                      id: {
+                        type: 'integer',
+                      },
+                      createdAt: {
+                        type: 'string',
+                      },
+                    },
+                  },
+                ],
+              },
+            },
+          },
+        },
+      },
+      post: {
+        tags: [
+          'Estoque',
+        ],
+        description: 'Criar uma nova entrada no estoque',
+        consumes: [
+          'application/json',
+        ],
+        produces: [
+          'application/json',
+        ],
+        parameters: [
+          {
+            in: 'body',
+            name: 'body',
+            description: 'Propriedades do objeto de movimentação do estoque',
+            required: true,
+            schema: {
+              allOf: [
+                {
+                  $ref: '#definitions/Stock',
+                },
+                {
+                  type: 'object',
+                  properties: {
+                    productId: {
+                      type: 'integer',
+                    },
+                  },
+                },
+                {
+                  required: [
+                    'productId',
+                    'quantity',
+                  ],
+                },
+              ],
+            },
+          },
+        ],
+        responses: {
+          201: {
+            description: '',
+            schema: {
+              type: 'object',
+              properties: {
+                alert: {
+                  type: 'string',
+                },
+              },
+            },
+          },
+        },
+      },
+    },
+    '/stock/output/{id}': {
+      delete: {
+        tags: [
+          'Estoque',
+        ],
+        description: 'Remover uma saída de estoque',
+        produces: [
+          'application/json',
+        ],
+        parameters: [
+          {
+            in: 'path',
+            name: 'id',
+            description: 'Chave da movimentação de estoque',
+            required: true,
+            type: 'integer',
+            format: 'int64',
+          },
+        ],
+        responses: {
+          204: {
+            description: 'Movimentação removida',
+          },
+        },
+      },
+    },
   },
   definitions: {
     Product: {
