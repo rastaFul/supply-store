@@ -5,4 +5,4 @@ class NotAllowed extends Error {
   }
 }
 
-module.exports = NotAllowed;
+module.exports.NotAllowed = NotAllowed;

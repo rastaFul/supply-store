@@ -5,4 +5,4 @@ class InvalidParams extends Error {
   }
 }
 
-module.exports = InvalidParams;
+module.exports.InvalidParams = InvalidParams;
