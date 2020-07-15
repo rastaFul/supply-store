@@ -34,15 +34,21 @@ class StockService {
     }
     await getManager().transaction(async (manager) => {
       movement = await manager.getRepository(entity).remove(item);
-      movement.product = await this.afterInsertRemove(manager, entity, movement.product.id,
+      movement.product = await this.afterDelete(manager, entity, movement.product.id,
         movement.quantity);
     });
     return movement;
   }
 
-  async afterInsertRemove(manager, entity, productId, quantity) {
+  async afterInsert(manager, entity, productId, quantity) {
     const product = await getRepository('Product').findOne(productId);
     const currentQuantity = entity === 'Inflow' ? product.currentQuantity + quantity : product.currentQuantity - quantity;
+    return manager.getRepository('Product').update(productId, { currentQuantity });
+  }
+
+  async afterDelete(manager, entity, productId, quantity) {
+    const product = await getRepository('Product').findOne(productId);
+    const currentQuantity = entity === 'Inflow' ? product.currentQuantity - quantity : product.currentQuantity + quantity;
     return manager.getRepository('Product').update(productId, { currentQuantity });
   }
 
