@@ -20,7 +20,7 @@ services:
     volumes:
       - /var/volumes/mysql5.7:/var/lib/mysql
     logging: *default-logging
-  backend:
+  app:
     build:
       context: ./
       dockerfile: Dockerfile
