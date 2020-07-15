@@ -278,7 +278,7 @@ module.exports.swaggerDocument = {
           {
             in: 'body',
             name: 'body',
-            description: 'Propriedades do objeto de entrada de estoque ',
+            description: 'Propriedades do objeto de movimentação do estoque',
             required: true,
             schema: {
               allOf: [
@@ -314,6 +314,32 @@ module.exports.swaggerDocument = {
                 },
               },
             },
+          },
+        },
+      },
+    },
+    '/stock/input/{id}': {
+      delete: {
+        tags: [
+          'Estoque',
+        ],
+        description: 'Remover uma entrada de estoque',
+        produces: [
+          'application/json',
+        ],
+        parameters: [
+          {
+            in: 'path',
+            name: 'id',
+            description: 'Chave da movimentação de estoque',
+            required: true,
+            type: 'integer',
+            format: 'int64',
+          },
+        ],
+        responses: {
+          204: {
+            description: 'Movimentação removida',
           },
         },
       },
