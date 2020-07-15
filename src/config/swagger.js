@@ -1,8 +1,11 @@
 module.exports.swaggerDocument = {
   swagger: '2.0',
   info: {
-    description: '',
-    version: '1.0.0',
+    description: 'Seja bem vindo a API de controle de estoque de materiais de construção.'
+      + 'Com essa API é possível realizar o cadastro de produtos, e adicionar entradas e saídas desses produtos.'
+      + 'Abaixo você encontrará todas as informações necessárias para utilizar os recursos implementados e '
+      + 'experimentá-los através do botão "Try it out" de cada rota',
+    version: '0.1.0',
     title: 'Controle de estoque de materiais de construção',
   },
   basePath: '/v1',
@@ -170,7 +173,7 @@ module.exports.swaggerDocument = {
         tags: [
           'Produto',
         ],
-        description: 'Remover um produto',
+        description: 'Remover um produto(Só será permitido a exclusão de produtos que não possuem entradas/saídas cadastradas)',
         produces: [
           'application/json',
         ],
@@ -267,7 +270,7 @@ module.exports.swaggerDocument = {
         tags: [
           'Estoque',
         ],
-        description: 'Criar uma nova entrada no estoque',
+        description: 'Criar uma nova entrada no estoque. Caso a quantidade atualizada do produto esteja fora do estipulado, será informado um alerta no retorno da requisição',
         consumes: [
           'application/json',
         ],
@@ -405,7 +408,9 @@ module.exports.swaggerDocument = {
         tags: [
           'Estoque',
         ],
-        description: 'Criar uma nova entrada no estoque',
+        description: 'Criar uma nova saída no estoque. Só é permitido quantidades de saídas disponíveis no estoque'
+          + 'para o produto informado. Caso a quantidade atualizada do produto esteja fora do estipulado, '
+          + 'será informado um alerta no retorno da requisição',
         consumes: [
           'application/json',
         ],
