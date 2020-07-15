@@ -1,4 +1,6 @@
 const { getRepository, Repository, getManager } = require('typeorm');
+const { NotAllowed } = require('../error/not-allowed');
+const { InvalidParams } = require('../error/invalid-params');
 
 class StockService {
   find(entity) {
@@ -9,11 +11,11 @@ class StockService {
     const product = await getRepository('Product').findOne(productId);
     let movement = {};
     if (!product) {
-      throw new Error('Produto informado não existe');
+      throw new InvalidParams('productId');
     }
 
     if (entity === 'Outflow' && product.currentQuantity - quantity < 0) {
-      throw new Error('Não há produto suficiente em estoque');
+      throw new NotAllowed('Não há produto suficiente em estoque');
     }
 
     const repository = new Repository(entity);
@@ -34,7 +36,7 @@ class StockService {
     let movement = {};
 
     if (!item) {
-      throw new Error('Item não existe');
+      throw new InvalidParams('id');
     }
     await getManager().transaction(async (manager) => {
       movement = await manager.getRepository(entity).remove(item);

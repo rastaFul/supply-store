@@ -1,4 +1,5 @@
 const { getRepository, Repository } = require('typeorm');
+const { InvalidParams } = require('../error/invalid-params');
 
 class ProductService {
   async find() {
@@ -22,7 +23,7 @@ class ProductService {
     const product = await getRepository('Product').findOne({ where: { id } });
 
     if (!product) {
-      throw new Error('Produto informado não existe');
+      throw new InvalidParams('id');
     }
 
     product.name = params.name || product.name;
@@ -37,7 +38,7 @@ class ProductService {
     const product = await getRepository('Product').findOne({ where: { id } });
 
     if (!product) {
-      throw new Error('Produto informado não existe');
+      throw new InvalidParams('id');
     }
 
     await getRepository('Product').remove(product);
