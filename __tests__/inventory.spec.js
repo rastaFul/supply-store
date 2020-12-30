@@ -8,7 +8,7 @@ const {
   getRepository,
 } = require('typeorm');
 
-const StockService = require('../src/services/stock-service');
+const InventoryService = require('../src/services/inventory-service');
 const ProductEntity = require('../src/entity/Product');
 const InflowEntity = require('../src/entity/Inflow');
 const OutflowEntity = require('../src/entity/Outflow');
@@ -52,8 +52,8 @@ describe('TESTE DE TRANSAÇÕES', () => {
   });
 
   it('Inserir entrada no estoque', async () => {
-    const stock = new StockService();
-    await stock.insert(1, 'Inflow', 10);
+    const inventory = new InventoryService();
+    await inventory.insert(1, 'Inflow', 10);
 
     const input = await getRepository('Inflow').findOne({ relations: ['product'] });
     let product = await getRepository('Product').findOne(1);
@@ -62,7 +62,7 @@ describe('TESTE DE TRANSAÇÕES', () => {
     expect(input.product.id).toBe(1);
 
     expect(product.currentQuantity).toBe(10);
-    await stock.insert(1, 'Inflow', 15);
+    await inventory.insert(1, 'Inflow', 15);
     product = await getRepository('Product').findOne(1);
     expect(product.currentQuantity).toBe(25);
   });
@@ -72,8 +72,8 @@ describe('TESTE DE TRANSAÇÕES', () => {
     product.currentQuantity = 100;
     await getRepository('Product').save(product);
 
-    const stock = new StockService();
-    await stock.insert(1, 'Outflow', 10);
+    const inventory = new InventoryService();
+    await inventory.insert(1, 'Outflow', 10);
 
     const input = await getRepository('Outflow').findOne({ relations: ['product'] });
     let productUpdated = await getRepository('Product').findOne(1);
@@ -82,14 +82,14 @@ describe('TESTE DE TRANSAÇÕES', () => {
     expect(input.product.id).toBe(1);
 
     expect(productUpdated.currentQuantity).toBe(90);
-    await stock.insert(1, 'Outflow', 15);
+    await inventory.insert(1, 'Outflow', 15);
     productUpdated = await getRepository('Product').findOne(1);
     expect(productUpdated.currentQuantity).toBe(75);
   });
 
   it('Saldo após entrada e saída no estoque', async () => {
-    const stock = new StockService();
-    await stock.insert(1, 'Inflow', 15);
+    const inventory = new InventoryService();
+    await inventory.insert(1, 'Inflow', 15);
 
     const input = await getRepository('Inflow').findOne({ relations: ['product'] });
     let product = await getRepository('Product').findOne(1);
@@ -98,7 +98,7 @@ describe('TESTE DE TRANSAÇÕES', () => {
     expect(input.product.id).toBe(1);
 
     expect(product.currentQuantity).toBe(15);
-    await stock.insert(1, 'Outflow', 10);
+    await inventory.insert(1, 'Outflow', 10);
     const output = await getRepository('Outflow').findOne({ relations: ['product'] });
 
     expect(output.quantity).toBe(10);

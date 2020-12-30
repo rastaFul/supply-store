@@ -1,6 +1,6 @@
 const mainController = require('./controllers/main-controller');
 const productController = require('./controllers/product-controller');
-const stockController = require('./controllers/stock-controller');
+const inventoryController = require('./controllers/inventory-controller');
 
 class Router {
   constructor(app) {
@@ -11,13 +11,13 @@ class Router {
     app.put('/v1/product/:id', productController.put);
     app.delete('/v1/product/:id', productController.delete);
 
-    app.get('/v1/stock/input', stockController.getInput);
-    app.post('/v1/stock/input', stockController.postInput);
-    app.delete('/v1/stock/input/:id', stockController.deleteInput);
+    app.get('/v1/inventory/input', inventoryController.getInput);
+    app.post('/v1/inventory/input', inventoryController.postInput);
+    app.delete('/v1/inventory/input/:id', inventoryController.deleteInput);
 
-    app.get('/v1/stock/output', stockController.getOutput);
-    app.post('/v1/stock/output', stockController.postOutput);
-    app.delete('/v1/stock/output/:id', stockController.deleteOutput);
+    app.get('/v1/inventory/output', inventoryController.getOutput);
+    app.post('/v1/inventory/output', inventoryController.postOutput);
+    app.delete('/v1/inventory/output/:id', inventoryController.deleteOutput);
   }
 }
 

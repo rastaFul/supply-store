@@ -1,5 +1,5 @@
 const ProductService = require('../services/product-service');
-const StockService = require('../services/stock-service');
+const InventoryService = require('../services/inventory-service');
 
 module.exports.product = new ProductService();
-module.exports.stock = new StockService();
+module.exports.inventory = new InventoryService();

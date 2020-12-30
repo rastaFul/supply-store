@@ -2,7 +2,7 @@ const { getRepository, Repository, getManager } = require('typeorm');
 const { NotAllowed } = require('../error/not-allowed');
 const { InvalidParams } = require('../error/invalid-params');
 
-class StockService {
+class InventoryService {
   find(entity) {
     return getRepository(entity).find({ relations: ['product'] });
   }
@@ -58,7 +58,7 @@ class StockService {
     return manager.getRepository('Product').update(productId, { currentQuantity });
   }
 
-  checkProductStock(product, moviment) {
+  checkProductInventory(product, moviment) {
     const message = moviment === 'input' ? 'Produto com quantidade abaixo do esperado' : 'Produto com quantidade acima do esperado';
     return {
       alert: product.currentQuantity < product.minQuantity || product.currentQuantity > product.maxQuantity ? message : '',
@@ -66,4 +66,4 @@ class StockService {
   }
 }
 
-module.exports = StockService;
+module.exports = InventoryService;
