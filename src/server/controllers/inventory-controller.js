@@ -1,11 +1,11 @@
-const { stock } = require('../../config/service');
+const { inventory } = require('../../config/service');
 const { MissingParams } = require('../../error/missing-params');
 const { httpCustom } = require('../error/http');
 
-class StockController {
+class inventoryController {
   async getInput(req, res) {
     try {
-      const response = await stock.find('Inflow');
+      const response = await inventory.find('Inflow');
       return res.status(200).send(response);
     } catch (error) {
       const response = httpCustom.handleErrors(error);
@@ -24,8 +24,8 @@ class StockController {
         }
       }
 
-      const moviment = await stock.insert(req.body.productId, 'Inflow', req.body.quantity);
-      const response = stock.checkProductStock(moviment.product, 'input');
+      const transaction = await inventory.insert(req.body.productId, 'Inflow', req.body.quantity);
+      const response = inventory.checkProductInventory(transaction.product, 'input');
       return res.status(201).send(response);
     } catch (error) {
       const response = httpCustom.handleErrors(error);
@@ -39,7 +39,7 @@ class StockController {
         throw new MissingParams('id');
       }
 
-      await stock.delete(req.params.id, 'Inflow');
+      await inventory.delete(req.params.id, 'Inflow');
       return res.status(204).send();
     } catch (error) {
       const response = httpCustom.handleErrors(error);
@@ -49,7 +49,7 @@ class StockController {
 
   async getOutput(req, res) {
     try {
-      const response = await stock.find('Outflow');
+      const response = await inventory.find('Outflow');
       return res.status(200).send(response);
     } catch (error) {
       const response = httpCustom.handleErrors(error);
@@ -68,8 +68,8 @@ class StockController {
         }
       }
 
-      const moviment = await stock.insert(req.body.productId, 'Outflow', req.body.quantity);
-      const response = stock.checkProductStock(moviment.product, 'output');
+      const moviment = await inventory.insert(req.body.productId, 'Outflow', req.body.quantity);
+      const response = inventory.checkProductInventory(moviment.product, 'output');
       return res.status(201).send(response);
     } catch (error) {
       const response = httpCustom.handleErrors(error);
@@ -83,7 +83,7 @@ class StockController {
         throw new MissingParams('id');
       }
 
-      await stock.delete(req.params.id, 'Outflow');
+      await inventory.delete(req.params.id, 'Outflow');
       return res.status(204).send();
     } catch (error) {
       const response = httpCustom.handleErrors(error);
@@ -92,4 +92,4 @@ class StockController {
   }
 }
 
-module.exports = new StockController();
+module.exports = new inventoryController();

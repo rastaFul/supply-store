@@ -209,7 +209,7 @@ module.exports.swaggerDocument = {
         },
       },
     },
-    '/stock/input': {
+    '/inventory/input': {
       get: {
         tags: [
           'Estoque',
@@ -226,7 +226,7 @@ module.exports.swaggerDocument = {
               items: {
                 allOf: [
                   {
-                    $ref: '#definitions/Stock',
+                    $ref: '#definitions/Inventory',
                   },
                   {
                     type: 'object',
@@ -286,7 +286,7 @@ module.exports.swaggerDocument = {
             schema: {
               allOf: [
                 {
-                  $ref: '#definitions/Stock',
+                  $ref: '#definitions/Inventory',
                 },
                 {
                   type: 'object',
@@ -321,7 +321,7 @@ module.exports.swaggerDocument = {
         },
       },
     },
-    '/stock/input/{id}': {
+    '/inventory/input/{id}': {
       delete: {
         tags: [
           'Estoque',
@@ -347,7 +347,7 @@ module.exports.swaggerDocument = {
         },
       },
     },
-    '/stock/output': {
+    '/inventory/output': {
       get: {
         tags: [
           'Estoque',
@@ -364,7 +364,7 @@ module.exports.swaggerDocument = {
               items: {
                 allOf: [
                   {
-                    $ref: '#definitions/Stock',
+                    $ref: '#definitions/Inventory',
                   },
                   {
                     type: 'object',
@@ -426,7 +426,7 @@ module.exports.swaggerDocument = {
             schema: {
               allOf: [
                 {
-                  $ref: '#definitions/Stock',
+                  $ref: '#definitions/Inventory',
                 },
                 {
                   type: 'object',
@@ -461,7 +461,7 @@ module.exports.swaggerDocument = {
         },
       },
     },
-    '/stock/output/{id}': {
+    '/inventory/output/{id}': {
       delete: {
         tags: [
           'Estoque',
@@ -506,7 +506,7 @@ module.exports.swaggerDocument = {
         },
       },
     },
-    Stock: {
+    Inventory: {
       type: 'object',
       properties: {
         quantity: {
